@@ -14,11 +14,7 @@ services:
       - insurance_app_network
 
   web-api:
-    build:
-      context: .
-      args:
-        UID: ${UID}
-        GID: ${GID}
+    build: .
     container_name: web-api
     working_dir: /app
     depends_on:
@@ -32,7 +28,8 @@ services:
     env_file:
       - .env
     environment:
-      RAILS_ENV: development
+      UID: ${UID}
+      GID: ${GID}
     user: "${UID}:${GID}"
     entrypoint: ./entrypoint.sh
     networks:
