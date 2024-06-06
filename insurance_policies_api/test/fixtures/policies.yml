@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  policy_id: 1
+  issue_date: 2024-06-06
+  end_coverage_date: 2024-06-06
+  vehicle: one
+  insured: one
+
+two:
+  policy_id: 1
+  issue_date: 2024-06-06
+  end_coverage_date: 2024-06-06
+  vehicle: two
+  insured: two

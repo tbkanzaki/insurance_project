@@ -10,8 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 0) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_06_033005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "insureds", force: :cascade do |t|
+    t.string "name"
+    t.string "cpf"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "policies", force: :cascade do |t|
+    t.integer "policy_id", null: false
+    t.date "issue_date"
+    t.date "end_coverage_date"
+    t.bigint "vehicle_id", null: false
+    t.bigint "insured_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["insured_id"], name: "index_policies_on_insured_id"
+    t.index ["policy_id"], name: "index_policies_on_policy_id", unique: true
+    t.index ["vehicle_id"], name: "index_policies_on_vehicle_id"
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.string "plate"
+    t.string "brand"
+    t.string "model"
+    t.string "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "policies", "insureds"
+  add_foreign_key "policies", "vehicles"
 end
