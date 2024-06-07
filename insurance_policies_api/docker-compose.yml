@@ -14,32 +14,25 @@ services:
       - insurance_app_network
 
   web-api:
+    container_name: web-api
     build:
       context: .
-      args:
-        UID: ${UID}
-        GID: ${GID}
-    container_name: web-api
     working_dir: /app
+    volumes:
+      - .:/app
+      - ruby_gems:/usr/local/bundle
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
     depends_on:
       - postgres
     command: bash -c "rm -f tmp/pids/server.pid && bin/setup && bundle exec rails s -p 5000 -b '0.0.0.0'"
-    volumes:
-      - .:/app
-      - rubygems:/usr/local/bundle
-    ports:
-      - "5000:5000"
-    env_file:
-      - .env
-    environment:
-      RAILS_ENV: development
-    user: "${UID}:${GID}"
-    entrypoint: ./entrypoint.sh
     networks:
       - insurance_app_network
 
 volumes:
-  rubygems:
+  ruby_gems:
   pgdata:
 
 networks:
