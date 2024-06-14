@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  web-graphql-api:
+    container_name: web-graphql-api
+    image: 'ruby:3.2.2'
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ruby_gems:/usr/local/bundle
+    ports:
+      - "4000:4000"
+    command: bash -c "rm -f tmp/pids/server.pid && bin/setup && bundle exec rails s -b '0.0.0.0' -p 4000"
+    networks:
+      - insurance_app_network
+
+volumes:
+  ruby_gems:
+
+networks:
+  insurance_app_network:
