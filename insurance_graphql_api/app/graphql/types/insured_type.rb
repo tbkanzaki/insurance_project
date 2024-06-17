@@ -1,8 +1,7 @@
-module Type
+module Types
   class InsuredType < Types::BaseObject
     description "Insured person"
-    field :id, ID, null: false
     field :cpf, String, null: false
-    field :name, String, null: flase
+    field :name, String, null: false
   end
 end
