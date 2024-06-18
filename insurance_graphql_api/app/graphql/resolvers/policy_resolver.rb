@@ -1,6 +1,6 @@
 module Resolvers
   class PolicyResolver < Resolvers::BaseResolver
-    type Types::PolicyType, null: false
+    type Types::PolicyType, null: true
     argument :policy_id, Integer, required: true
 
     def resolve(policy_id:)
