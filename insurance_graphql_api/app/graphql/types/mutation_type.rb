@@ -8,5 +8,7 @@ module Types
     def test_field
       "Hello World"
     end
+
+    field :create_policy, mutation: Mutations::CreatePolicy
   end
 end

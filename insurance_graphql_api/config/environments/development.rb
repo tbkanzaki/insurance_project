@@ -56,6 +56,14 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
+  config.hosts = [
+    IPAddr.new("0.0.0.0/0"), # All IPv4 addresses.
+    IPAddr.new("::/0"),      # All IPv6 addresses.
+    "localhost",
+    "rabbitmq",
+    "http://web-graphql-api:4000/",
+    "web-graphql-api:4000",
+  ]
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
