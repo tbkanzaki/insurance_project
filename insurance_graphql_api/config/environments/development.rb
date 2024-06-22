@@ -60,8 +60,9 @@ Rails.application.configure do
     IPAddr.new("0.0.0.0/0"), # All IPv4 addresses.
     IPAddr.new("::/0"),      # All IPv6 addresses.
     "localhost",
-    "http://web-api:5000/",
-    "web-api:5000"
+    "rabbitmq",
+    "http://web-graphql-api:4000/",
+    "web-graphql-api:4000",
   ]
 
   # Raises error for missing translations.

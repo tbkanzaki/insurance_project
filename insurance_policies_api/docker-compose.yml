@@ -4,44 +4,41 @@ services:
   postgres:
     image: postgres
     container_name: postgres-api
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-
+    env_file:
+      - .env
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER}
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - insurance_app_network
 
   web-api:
-    build:
-      context: .
-      args:
-        UID: ${UID}
-        GID: ${GID}
     container_name: web-api
+    image: 'ruby:3.2.2'
     working_dir: /app
+    volumes:
+      - .:/app
+      - ruby_gems:/usr/local/bundle
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
     depends_on:
       - postgres
     command: bash -c "rm -f tmp/pids/server.pid && bin/setup && bundle exec rails s -p 5000 -b '0.0.0.0'"
-    volumes:
-      - .:/app
-      - rubygems:/usr/local/bundle
-    ports:
-      - "5000:5000"
-    env_file:
-      - .env
-    environment:
-      RAILS_ENV: development
-    user: "${UID}:${GID}"
-    entrypoint: ./entrypoint.sh
     networks:
       - insurance_app_network
 
 volumes:
-  rubygems:
-  pgdata:
+ ruby_gems:
+ pgdata:
 
 networks:
-  insurance_app_network:
-      
+ insurance_app_network:
+  name: insurance_app_network
+  external: true
+    
