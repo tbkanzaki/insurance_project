@@ -1,0 +1,43 @@
+<h1>Policy</h1>
+
+<% if !@response["message"] %>
+  <table class="table">
+    <tr>
+      <th scope="col">Policy Id</th>
+      <td><%= @response["policyId"] %></td>
+    <tr>     
+      <th scope="col">Start Date</th>
+      <td><%= @response["issueDate"] %></td>
+    </tr>
+    <tr>      
+      <th scope="col">End Date</th>
+      <td><%= @response["endCoverageDate"] %></td>
+    </tr>
+    <tr>      
+      <th sco@response["issueDate"]pe="col">CPF</th>
+      <td><%= @response["insured"]["cpf"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Name</th>
+      <td><%= @response["insured"]["name"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Plate</th>
+      <td><%= @response["vehicle"]["plate"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Brand</th>
+      <td><%= @response["vehicle"]["brand"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Model</th>
+      <td><%= @response["vehicle"]["model"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Year</dt>
+      <td><%= @response["vehicle"]["year"] %></td>
+    </tr>
+  </table>
+<% else %>
+  <p class="text-danger text-center fs-3">GraphQL Message: <%= @response["message"]%></p>
+<% end %>

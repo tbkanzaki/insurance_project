@@ -1,7 +1,7 @@
 require 'bunny'
 module Mutations
   class CreatePolicy < Mutations::BaseMutation
-    argument :policy, Types::PolicyArgumentsType
+    argument :policy, Types::PolicyArgumentsType, required: true
 
     field :status, String, null: false
 

@@ -19,5 +19,6 @@ module Types
     end
 
     field :policy, resolver: Resolvers::PolicyResolver
+    field :policies, resolver: Resolvers::PoliciesResolver
   end
 end

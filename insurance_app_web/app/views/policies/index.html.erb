@@ -1,0 +1,40 @@
+<h1>Policies</h1>
+
+<% if @response["data"].any? %>
+  <% if @response["data"]["policies"].any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Policy Id</th>
+          <th scope="col">Stare Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">CPF</th>
+          <th scope="col">Name</th>
+          <th scope="col">Plate</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Model</th>
+          <th scope="col">Year</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <% @response["data"]["policies"].each do |policy|%>
+          <tr>
+            <th scope="col" class="text-center""><%= policy["policyId"] %></th>
+            <td><%= policy["issueDate"] %></td>
+            <td><%= policy["endCoverageDate"] %></td>
+            <td><%= policy["insured"]["cpf"]%></td>
+            <td><%= policy["insured"]["name"] %></td>
+            <td><%= policy["vehicle"]["plate"] %></td>
+            <td><%= policy["vehicle"]["brand"] %></td>
+            <td><%= policy["vehicle"]["model"] %></td>
+            <td><%= policy["vehicle"]["year"] %></td>                                                               
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-danger text-center fs-3">GraphQL Message: No policies!</p>
+  <% end %>
+<% else %>
+  <p class="text-danger text-center fs-3">GraphQL Message - Unable to load Policies: <%= @response["errors"][0]["message"]%></p>
+<% end %>
