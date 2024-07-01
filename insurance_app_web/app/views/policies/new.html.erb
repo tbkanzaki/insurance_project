@@ -1,0 +1,45 @@
+<h1> New Policy </h1>
+  <%= form_with url: policies_path do |form|%>
+  <div class="row g-3">
+    <div >
+      <%= form.label :policy_id, "Policy Number", class: "form-label" %>
+      <%= form.text_field :policy_id, class: "form-control" %>
+    </div>
+    <div class="col-md-6">
+      <%= form.label :issue_date, "Issue Date" %>
+      <%= form.date_field :issue_date, class: "form-control" %>
+    </div>
+    <div class="col-md-6">
+      <%= form.label :end_coverage_date, "End Coverage Date" %>
+      <%= form.date_field :end_coverage_date, class: "form-control" %>
+    </div>
+    
+    <div class="col-md-6">
+      <%= form.label :name, "Issuered Name" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+    <div class="col-md-6">
+      <%= form.label :cpf, "CPF" %>
+      <%= form.text_field :cpf, class: "form-control" %>
+    </div>
+    <div class="col-md-3">
+      <%= form.label :plate, "Plate" %>
+      <%= form.text_field :plate, class: "form-control" %>
+    </div>
+    <div class="col-md-3">
+      <%= form.label :brand, "Brand" %>
+      <%= form.text_field :brand, class: "form-control" %>
+    </div>
+    <div class="col-md-3">
+      <%= form.label :model, "Model" %>
+      <%= form.text_field :model, class: "form-control" %>
+    </div>
+    <div class="col-md-3">
+      <%= form.label :year, "Year" %>
+      <%= form.text_field :year, class: "form-control" %>
+    </div>
+    <div>
+      <%= form.submit "Create Policy", class: "btn btn-secondary" %>
+    </div>
+   </div>
+  <% end %>

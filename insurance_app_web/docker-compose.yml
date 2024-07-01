@@ -1,0 +1,22 @@
+services:
+  web:
+    container_name: web
+    image: 'ruby:3.2.2'
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ruby_gems:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    command: bash -c "rm -f tmp/pids/server.pid && bin/setup && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    networks:
+      - insurance_app_network
+
+volumes:
+ ruby_gems:
+
+networks:
+ insurance_app_network:
+  name: insurance_app_network
+  external: true
+    

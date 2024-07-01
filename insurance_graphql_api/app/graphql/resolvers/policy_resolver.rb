@@ -6,7 +6,7 @@ module Resolvers
     def resolve(policy_id:)
       response = HTTParty.get("http://web-api:5000/policies/#{policy_id}")
       if response.body.blank?
-        raise GraphQL::ExecutionError , "Not found pocily_id: #{policy_id}"
+        raise GraphQL::ExecutionError , "Not found! Pocily_id: #{policy_id}"
       else
         begin
           JSON.parse(response.body)
