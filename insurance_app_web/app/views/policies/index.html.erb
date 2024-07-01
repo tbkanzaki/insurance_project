@@ -36,5 +36,12 @@
     <p class="text-danger text-center fs-3">GraphQL Message: No policies!</p>
   <% end %>
 <% else %>
-  <p class="text-danger text-center fs-3">GraphQL Message - Unable to load Policies: <%= @response["errors"][0]["message"]%></p>
+  <div class="error-page">
+    <div class="dialog">
+      <div>
+        <h1>We're sorry, but something went wrong.</h1>
+      </div>
+      <p>GraphQL Message - Unable to load Policies:<br/> <%= @response["errors"][0]["message"] %></p>
+    </div>
+  </div>
 <% end %>

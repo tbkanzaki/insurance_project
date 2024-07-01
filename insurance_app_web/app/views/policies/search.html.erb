@@ -39,5 +39,12 @@
     </tr>
   </table>
 <% else %>
-  <p class="text-danger text-center fs-3">GraphQL Message: <%= @response["message"]%></p>
+  <div class="error-page">
+    <div class="dialog">
+      <div>
+        <h1>We're sorry, but something went wrong.</h1>
+      </div>
+      <p>GraphQL Message - Unable to load Policy:<br/> <%= @response["message"]%></p>
+    </div>
+  </div>
 <% end %>
