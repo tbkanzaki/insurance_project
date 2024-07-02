@@ -4,7 +4,8 @@ module Resolvers
     argument :policy_id, Integer, required: true
 
     def resolve(policy_id:)
-      response = HTTParty.get("http://web-api:5000/policies/#{policy_id}")
+      base_api_url =  ENV.fetch("BASE_API_URL")
+      response = HTTParty.get("#{base_api_url}/policies/#{policy_id}")
       if response.body.blank?
         raise GraphQL::ExecutionError , "Not found! Pocily_id: #{policy_id}"
       else

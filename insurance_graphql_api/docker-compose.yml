@@ -27,6 +27,8 @@ services:
       - ruby_gems:/usr/local/bundle
     ports:
       - "4000:4000"
+    env_file:
+      - .env
     depends_on:
       rabbitmq:
         condition: service_healthy

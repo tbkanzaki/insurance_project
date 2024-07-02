@@ -3,7 +3,9 @@ module Resolvers
     type [Types::PolicyType], null: false
 
     def resolve
-      response = HTTParty.get("http://web-api:5000/policies")
+      base_api_url =  ENV.fetch("BASE_API_URL")
+      response = HTTParty.get("#{base_api_url}/policies")
+      #response = HTTParty.get("http://web-api:5000/policies")
       JSON.parse(response.body)
       # if response.body.blank?
       #   raise GraphQL::ExecutionError , "No records"
