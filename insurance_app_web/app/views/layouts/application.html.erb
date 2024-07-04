@@ -13,34 +13,61 @@
     
   </head>
 
-  <body>
+  <body class="bg-body-tertiary">
     <div class="container">
       <nav class="navbar navbar-expand-lg bg-primary bg-body-tertiary">
         <div class="container-fluid">
+          <%= link_to 'Home', root_path, class: "nav-link active" %>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <%= link_to 'App Web', root_path, class: "navbar-brand" %>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item"><%= link_to 'Home', root_path, class: "nav-link active" %></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Policy
-                </a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to 'Policies', policies_path, class:"dropdown-item" %></li>
-                  <li><%= link_to 'New Policy', new_policy_path, class:"dropdown-item" %></li>
-                </ul>
-              </li>
-            </ul>
-            <%= form_with(url: search_policies_path, method: :get, class: "d-flex") do |f| %>
-              <%= f.text_field :search, placeholder: "Search by Policy Id", class: "form-control me-2" %>
-              <%= f.submit 'Search', class: 'btn btn-outline-secondary' %>
+          <div class="collapse navbar-collapse " id="navbarTogglerDemo03">
+            <% if user_signed_in? %>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"></li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Policy
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to 'Policies', policies_path, class:"dropdown-item" %></li>
+                    <li><%= link_to 'New Policy', new_policy_path, class:"dropdown-item" %></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <%= form_with(url: search_path, method: :get, class: "d-flex") do |f| %>
+                    <%= f.text_field :search, placeholder: "Search by Policy Id", class: "form-control me-2" %>
+                    <%= f.submit 'Search', class: 'btn btn-outline-secondary' %>
+                  <% end %>
+                </li>
+              </ul>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <%= current_user.email%>
+                  <% if current_user.avatar_url.present? %>
+                    <%= image_tag(current_user.avatar_url, class: 'avatar') %><br>
+                  <% else %>
+                    <%= image_tag('no_avatar.png', class: 'avatar') %><br>
+                  <% end %>
+                </li>
+              </ul>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item d-flex justify-content-evenly">
+                  <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete, class: "btn btn-secondary btn-sm" %>
+                </li>
+              </ul>
+            <% else %>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <%= button_to "Login", new_user_session_path, data: { turbo: false }, method: :get, class: "btn btn-secondary btn-sm ms-4 me-2" %>
+                </li>
+              </ul>
             <% end %>
           </div>
         </div>
-      </nav>   
+      </nav>
       <div class="text-danger text-center "><%= alert %></div>
       <div class="text-success text-center"><%= notice %></div>
       <%= yield %>

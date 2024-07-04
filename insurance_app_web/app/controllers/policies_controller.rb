@@ -1,4 +1,6 @@
 class PoliciesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @response = GraphqlService.get_policies
   rescue StandardError => e

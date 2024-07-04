@@ -61,3 +61,8 @@ group :development do
 end
 
 gem "httparty"
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-cognito-idp'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
