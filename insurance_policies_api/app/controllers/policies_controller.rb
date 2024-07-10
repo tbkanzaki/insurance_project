@@ -1,4 +1,5 @@
 class PoliciesController < ApplicationController
+  before_action :authenticate_token
   before_action :fetch_policy, only: %i[show]
 
   def index

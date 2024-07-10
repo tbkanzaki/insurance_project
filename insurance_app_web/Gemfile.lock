@@ -279,6 +279,7 @@ DEPENDENCIES
   httparty
   importmap-rails
   jbuilder
+  jwt
   omniauth
   omniauth-cognito-idp
   omniauth-google-oauth2

@@ -7,7 +7,9 @@ module Mutations
 
     def resolve(policy:)
         queue = $channel.queue('policy')
-        queue.publish(policy.to_json)
+        headers = {Authorization: "Bearer #{context[:token]}"}
+
+        queue.publish(policy.to_json, { headers: headers })
         {
           status: "OK"
         }

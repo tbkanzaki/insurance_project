@@ -5,7 +5,9 @@ module Resolvers
 
     def resolve(policy_id:)
       base_api_url =  ENV.fetch("BASE_API_URL")
-      response = HTTParty.get("#{base_api_url}/policies/#{policy_id}")
+      headers = {"Content-Type" => "application/json", Authorization: "Bearer #{context[:token]}"}
+
+      response = HTTParty.get("#{base_api_url}/policies/#{policy_id}", headers: headers)
       if response.body.blank?
         raise GraphQL::ExecutionError , "Not found! Pocily_id: #{policy_id}"
       else

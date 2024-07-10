@@ -4,18 +4,10 @@ module Resolvers
 
     def resolve
       base_api_url =  ENV.fetch("BASE_API_URL")
-      response = HTTParty.get("#{base_api_url}/policies")
-      #response = HTTParty.get("http://web-api:5000/policies")
+      headers = {"Content-Type" => "application/json", Authorization: "Bearer #{context[:token]}"}
+
+      response = HTTParty.get("#{base_api_url}/policies", headers: headers)
       JSON.parse(response.body)
-      # if response.body.blank?
-      #   raise GraphQL::ExecutionError , "No records"
-      # else
-      #   begin
-      #     JSON.parse(response.body)
-      #   rescue StandardError => e
-      #     raise GraphQL::ExecutionError.new(e.message)
-      #   end
-      # end
     end
   end
 end

@@ -1,6 +1,6 @@
   require 'httparty'
   class GraphqlService
-    def self.get_policies
+    def self.get_policies(token)
       query = <<-GRAPHQL
         query { policies
           {
@@ -23,14 +23,14 @@
 
       options = {
         body: {query: query}.to_json,
-        headers: {"Content-Type" => "application/json"}
+        headers: {"Content-Type" => "application/json", Authorization: "Bearer #{token}"}
       }
 
       response = HTTParty.post("http://web-graphql-api:4000/graphql", options)
       JSON.parse(response.body)
     end
 
-    def self.get_policy(policy_id)
+    def self.get_policy(token, policy_id)
       query = <<-GRAPHQL
         query PolicyResolver($policyId: Int!) {
           policy(policyId: $policyId) {
@@ -54,16 +54,16 @@
       options = {
         body: {
           query: query,
-          variables: { policyId: policy_id.to_i}
+          variables: { policyId: policy_id.to_i }
         }.to_json,
-        headers: {"Content-Type" => "application/json"}
+        headers: {"Content-Type" => "application/json", Authorization: "Bearer #{token}"}
       }
 
       response = HTTParty.post("http://web-graphql-api:4000/graphql", options)
       JSON.parse(response.body)
     end
 
-    def self.create_policy(params)
+    def self.create_policy(token, params)
       policy_variables = set_variables(params)
       policy_attributes_input = set_attributes
       policy_arguments_input = set_arguments
@@ -81,7 +81,7 @@
           query: query,
           variables: policy_variables
         }.to_json,
-        headers: {"Content-Type" => "application/json"}
+        headers: {"Content-Type" => "application/json", Authorization: "Bearer #{token}"}
       }
 
       response = HTTParty.post("http://web-graphql-api:4000/graphql", options)

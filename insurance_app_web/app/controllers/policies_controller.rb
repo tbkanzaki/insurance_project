@@ -1,8 +1,9 @@
+require 'jwt'
 class PoliciesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @response = GraphqlService.get_policies
+    @response = GraphqlService.get_policies(encode_token)
   rescue StandardError => e
     Rails.logger.error("Errors: #{e.message}")
     @error = e.message
@@ -11,7 +12,7 @@ class PoliciesController < ApplicationController
 
   def search
     policy_id = params[:search]
-    @response = GraphqlService.get_policy(policy_id)
+    @response = GraphqlService.get_policy(encode_token, policy_id)
     if @response["errors"]
       @response = @response["errors"][0]
     else
@@ -28,12 +29,21 @@ class PoliciesController < ApplicationController
 
   def create
     begin
-      response = GraphqlService.create_policy(params)
+      response = GraphqlService.create_policy(encode_token, params)
       redirect_to policies_path, notice: "Policy sent successfully!" unless response["errors"]
     rescue StandardError => e
       Rails.logger.error("Errors: #{e.message}")
       @error = e.message
       render 'home/error', status: 500
     end
+  end
+
+  private
+
+  def encode_token
+    hmac_secret = ENV['HMAC_SECRET_KEY']
+    exp = Time.now.to_i + 4 * 3600
+    exp_payload = { email: current_user.email, exp: exp }
+    JWT.encode(exp_payload, hmac_secret, 'HS256')
   end
 end

@@ -9,5 +9,8 @@ channel = conn.create_channel
 queue = channel.queue('policy')
 
 queue.subscribe(block: false) do |delivery_info, properties, payload|
-    CreatePolicyWorker.execute(payload)
+
+    token = properties.headers['Authorization'].split(' ').last
+
+    CreatePolicyWorker.execute(payload, token)
 end
