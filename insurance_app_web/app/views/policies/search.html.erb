@@ -1,0 +1,50 @@
+<h1>Policy</h1>
+
+<% if !@response["message"] %>
+  <table class="table">
+    <tr>
+      <th scope="col">Policy Id</th>
+      <td><%= @response["policyId"] %></td>
+    <tr>     
+      <th scope="col">Start Date</th>
+      <td><%= @response["issueDate"] %></td>
+    </tr>
+    <tr>      
+      <th scope="col">End Date</th>
+      <td><%= @response["endCoverageDate"] %></td>
+    </tr>
+    <tr>      
+      <th sco@response["issueDate"]pe="col">CPF</th>
+      <td><%= @response["insured"]["cpf"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Name</th>
+      <td><%= @response["insured"]["name"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Plate</th>
+      <td><%= @response["vehicle"]["plate"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Brand</th>
+      <td><%= @response["vehicle"]["brand"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Model</th>
+      <td><%= @response["vehicle"]["model"] %></td>
+    </tr>
+    <tr>       
+      <th scope="col">Year</dt>
+      <td><%= @response["vehicle"]["year"] %></td>
+    </tr>
+  </table>
+<% else %>
+  <div class="error-page">
+    <div class="dialog">
+      <div>
+        <h1>We're sorry, but something went wrong.</h1>
+      </div>
+      <p>GraphQL Message - Unable to load Policy:<br/> <%= @response["message"]%></p>
+    </div>
+  </div>
+<% end %>
