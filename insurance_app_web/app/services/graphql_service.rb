@@ -17,6 +17,8 @@
               model
               year
             }
+            paymentLink
+            paymentStatus
           }
         }
       GRAPHQL
@@ -47,6 +49,8 @@
               model
               year
             }
+            paymentLink
+            paymentStatus
           }
         }
       GRAPHQL
@@ -63,8 +67,8 @@
       JSON.parse(response.body)
     end
 
-    def self.create_policy(token, params)
-      policy_variables = set_variables(params)
+    def self.create_policy(token, params, session_id, session_url)
+      policy_variables = set_variables(params, session_id, session_url)
       policy_attributes_input = set_attributes
       policy_arguments_input = set_arguments
 
@@ -88,7 +92,7 @@
       JSON.parse(response.body)
     end
 
-    def self.set_variables(params)
+    def self.set_variables(params, session_id, session_url)
       {
         policyId: params[:policy_id].to_i,
         issueDate: params[:issue_date],
@@ -98,7 +102,9 @@
         plate: params[:plate],
         brand: params[:brand],
         model: params[:model],
-        year: params[:year]
+        year: params[:year],
+        paymentId: session_id,
+        paymentLink: session_url
       }
     end
 
@@ -111,7 +117,9 @@
         $plate: String!
         $brand: String!
         $model: String!
-        $year: String!"
+        $year: String!
+        $paymentId: String!
+        $paymentLink: String!"
     end
 
     def self.set_arguments
@@ -130,6 +138,8 @@
             model: $model
             year: $year
           }
+          paymentId: $paymentId
+          paymentLink: $paymentLink
         }
       }"
     end

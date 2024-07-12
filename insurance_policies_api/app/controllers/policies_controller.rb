@@ -32,7 +32,10 @@ class PoliciesController < ApplicationController
         brand: p.vehicle.brand,
         model: p.vehicle.model,
         year: p.vehicle.year
-      }
+      },
+      payment_id: p.payment_id,
+      payment_link: p.payment_link,
+      payment_status: p.payment_status
     }
   end
 
@@ -51,7 +54,10 @@ class PoliciesController < ApplicationController
           brand: p.vehicle.brand,
           model: p.vehicle.model,
           year: p.vehicle.year
-        }
+        },
+        payment_id: p.payment_id,
+        payment_link: p.payment_link,
+        payment_status: p.payment_status
       }
     end
   end

@@ -6,5 +6,8 @@ module Types
     field :end_coverage_date, GraphQL::Types::ISO8601Date, null: false
     field :insured, Types::InsuredType, null: false
     field :vehicle, Types::VehicleType, null: false
+    field :payment_id, String, null: false
+    field :payment_link, String, null: false
+    field :payment_status, String, null: false
   end
 end

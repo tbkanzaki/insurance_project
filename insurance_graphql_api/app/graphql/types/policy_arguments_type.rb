@@ -6,5 +6,7 @@ module Types
     argument :end_coverage_date, GraphQL::Types::ISO8601Date, required: true
     argument :insured, Types::InsuredArgumentsType, required: true
     argument :vehicle, Types::VehicleArgumentsType, required: true
+    argument :payment_id, String, required: true
+    argument :payment_link, String, required: true
   end
 end

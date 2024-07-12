@@ -45,6 +45,8 @@ class CreatePolicyWorker
       Policy.create(policy_id: policy_payload['policy_id'],
                     issue_date: policy_payload['issue_date'],
                     end_coverage_date: policy_payload['end_coverage_date'],
+                    payment_id: policy_payload['payment_id'],
+                    payment_link: policy_payload['payment_link'],
                     insured: insured,
                     vehicle: vehicle)
     end
