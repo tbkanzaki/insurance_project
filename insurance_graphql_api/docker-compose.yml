@@ -36,6 +36,15 @@ services:
     networks:
       - insurance_app_network
 
+  ngrok:
+    image: ngrok/ngrok:alpine
+    container_name: ngrok
+    command: http --domain=beetle-maximum-bat.ngrok-free.app web-graphql-api:4000
+    env_file:
+      - .env
+    networks:
+      - insurance_app_network
+
 volumes:
   ruby_gems:
 

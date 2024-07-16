@@ -61,8 +61,13 @@ Rails.application.configure do
     IPAddr.new("::/0"),      # All IPv6 addresses.
     "localhost",
     "rabbitmq",
+    "http://web:3000/",
+    "web:3000",
     "http://web-graphql-api:4000/",
     "web-graphql-api:4000",
+    "beetle-maximum-bat.ngrok-free.app",
+    "http://web-api:5000/",
+    "web-api:5000"
   ]
 
   # Raises error for missing translations.
