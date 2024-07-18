@@ -12,5 +12,7 @@ Rails.application.routes.draw do
   resources :policies, only: %i(index new create)
 
   get 'search', to: 'policies#search'
+  get 'policies/success', to: 'policies#success'
+  get 'policies/cancel', to: 'policies#cancel'
   get 'error', to: 'home#error'
 end

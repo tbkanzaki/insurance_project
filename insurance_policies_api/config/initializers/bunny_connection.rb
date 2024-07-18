@@ -1,16 +1,19 @@
 # Be sure to restart your server when you modify this file.
 require 'bunny'
-require Rails.root.join("app", "workers", "create_policy_worker")
 
 conn = Bunny.new(ENV['RABBITMQ_URL'])
 conn.start
 
 channel = conn.create_channel
-queue = channel.queue('policy')
+queue_policy_create = channel.queue('policy')
+queue_policy_payment = channel.queue('payment')
 
-queue.subscribe(block: false) do |delivery_info, properties, payload|
+queue_policy_create.subscribe(block: false) do |delivery_info, properties, payload|
+  token = properties.headers['Authorization'].split(' ').last
 
-    token = properties.headers['Authorization'].split(' ').last
+  CreatePolicyWorker.execute(payload, token)
+end
 
-    CreatePolicyWorker.execute(payload, token)
+queue_policy_payment.subscribe(block: false) do |delivery_info, properties, payload|
+  UpdatePolicyWorker.execute(payload)
 end

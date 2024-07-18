@@ -29,7 +29,8 @@ class PoliciesController < ApplicationController
 
   def create
     begin
-      response = GraphqlService.create_policy(encode_token, params)
+      session = create_checkout_session
+      response = GraphqlService.create_policy(encode_token, params, session.id, session.url)
       redirect_to policies_path, notice: "Policy sent successfully!" unless response["errors"]
     rescue StandardError => e
       Rails.logger.error("Errors: #{e.message}")
@@ -38,7 +39,28 @@ class PoliciesController < ApplicationController
     end
   end
 
+  def success
+    redirect_to policies_path, notice: "Purchase Successful"
+  end
+
+  def cancel
+    redirect_to policies_path, notice: "Purchase Unsuccessful"
+  end
+
   private
+
+  def create_checkout_session
+    Stripe::Checkout::Session.create(
+        payment_method_types: ['card'],
+        line_items: [{
+          price: 'price_1PbRebDpSh2eKSVtBAA7Kl6C',
+          quantity: 1,
+        }],
+        mode: 'payment',
+        success_url: policies_success_url,
+        cancel_url: policies_cancel_url
+      )
+  end
 
   def encode_token
     hmac_secret = ENV['HMAC_SECRET_KEY']
