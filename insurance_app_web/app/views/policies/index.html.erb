@@ -23,11 +23,12 @@
             <td><%= policy["insured"]["cpf"]%></td>
             <td><%= policy["insured"]["name"] %></td>
             <td><%= policy["vehicle"]["plate"] %></td>
-            <% if policy["paymentStatus"] == "awaiting_payment" %>
-              <td><%= link_to "Awaiting payment", policy["paymentLink"], target: "_blank" %></td>
-            <% else %>
-              <td>Paid</td>
-            <% end %>                                       
+            <td id="paymentStatus-<%= policy["policyId"] %>">
+              <%= policy["paymentStatus"] %>  
+              <% if policy["paymentStatus"] == "Awaiting payment" %> 
+                - <%= link_to "Payment link", policy["paymentLink"], target: "_blank" %>
+              <% end %>
+            </td>                                    
           </tr>
         <% end %>
       </tbody>

@@ -1,3 +1,4 @@
+require 'httparty'
 class UpdatePolicyWorker
   class << self
     def execute(data)
@@ -21,6 +22,12 @@ class UpdatePolicyWorker
     def update_status(payment_id)
       policy = Policy.find_by(payment_id: payment_id)
       policy.update(payment_status: 1)
+      base_url = ENV.fetch("BASE_WEB_URL")
+      options = {
+        body: policy.to_json,
+        headers: {"Content-Type" => "application/json"}
+      }
+      HTTParty.post("#{base_url}/transmits_police_payment_status", options)
       policy
     end
   end

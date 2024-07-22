@@ -3,6 +3,7 @@ class PoliciesController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    sleep(1)
     @response = GraphqlService.get_policies(encode_token)
   rescue StandardError => e
     Rails.logger.error("Errors: #{e.message}")
@@ -39,14 +40,6 @@ class PoliciesController < ApplicationController
     end
   end
 
-  def success
-    redirect_to policies_path, notice: "Purchase Successful"
-  end
-
-  def cancel
-    redirect_to policies_path, notice: "Purchase Unsuccessful"
-  end
-
   private
 
   def create_checkout_session
@@ -57,8 +50,8 @@ class PoliciesController < ApplicationController
           quantity: 1,
         }],
         mode: 'payment',
-        success_url: policies_success_url,
-        cancel_url: policies_cancel_url
+        success_url: payments_success_url,
+        cancel_url: payments_cancel_url
       )
   end
 
